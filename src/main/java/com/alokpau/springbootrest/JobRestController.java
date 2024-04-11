@@ -4,10 +4,7 @@ import com.alokpau.springbootrest.model.JobPost;
 import com.alokpau.springbootrest.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,9 +20,25 @@ public class JobRestController {
         return service.getAllJobs();
     }
 
+    @GetMapping("keyword/{keyword}")
+    public List<JobPost> searchInPost(@PathVariable("keyword") String keyword) {
+        return service.search(keyword);
+    }
+
     @GetMapping("jobPost/{postId}")
     public JobPost getJob(@PathVariable("postId") int postId) {
         return service.getJob(postId);
     }
+
+    @PostMapping("jobPost")
+    public void addJob(@RequestBody JobPost jobPost) {
+        System.out.println(jobPost);
+        service.addJob(jobPost);
+    }
+
+//    @GetMapping("load")
+//    public String loadData() {
+//        return service.loadData();
+//    }
 
 }
